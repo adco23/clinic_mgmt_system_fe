@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api } from '../config/ApiClient';
+import { api } from '../../config/ApiClient';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ const Login = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
+
     setIsLoading(true);
 
     try {
@@ -23,7 +23,6 @@ const Login = () => {
     } finally {
       setIsLoading(false);
     }
-
   };
 
   return (
@@ -63,7 +62,13 @@ const Login = () => {
         </div>
 
         <div className='card-actions justify-end mt-6'>
-          <button type='submit' className='btn btn-primary w-full' disabled={!email || !password || isLoading} >{!isLoading ? 'Iniciar Sesión' : 'Cargando...'}</button>
+          <button
+            type='submit'
+            className='btn btn-primary w-full'
+            disabled={!email || !password || isLoading}
+          >
+            {!isLoading ? 'Iniciar Sesión' : 'Cargando...'}
+          </button>
         </div>
       </form>
 

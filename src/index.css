@@ -3,12 +3,11 @@
   themes: pastel --default;
 }
 
-
 @plugin "daisyui/theme" {
-  name: "pastel";
+  name: 'pastel';
   default: true;
   prefersdark: false;
-  color-scheme: "light";
+  color-scheme: 'light';
   --color-base-100: oklch(100% 0 0);
   --color-base-200: oklch(98.462% 0.001 247.838);
   --color-base-300: oklch(92.462% 0.001 247.838);
@@ -39,15 +38,14 @@
   --noise: 0;
 }
 
-
 @utility fieldset {
   @apply text-base;
 }
 
 @utility input {
-  @apply focus:outline-0 focus:border-2 focus-within:outline-0
+  @apply focus:outline-0 focus:border-2 focus-within:outline-0;
 }
 
 @utility select {
-  @apply focus:outline-0 focus-within:outline-0 focus:border-2
+  @apply focus:outline-0 focus-within:outline-0 focus:border-2;
 }

@@ -1,4 +1,4 @@
-import { ENDPOINTS } from "./ApiEndpoints";
+import { ENDPOINTS } from './ApiEndpoints';
 
 class ApiClient {
   constructor(baseURL) {

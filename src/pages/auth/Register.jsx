@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { api } from '../config/ApiClient';
+import { api } from '../../config/ApiClient';
 
 const Register = () => {
   const [roles, setRoles] = useState([]);
@@ -68,7 +68,10 @@ const Register = () => {
     <div className='card w-full max-w-md center'>
       <h2 className='text-4xl font-bold text-center'>Crear una cuenta</h2>
       <p className='text-center text-neutral py-3'>
-        ¿Ya tienes una cuenta? <a href='/auth' className='link'>Inicia sesión</a>
+        ¿Ya tienes una cuenta?{' '}
+        <a href='/auth' className='link'>
+          Inicia sesión
+        </a>
       </p>
 
       <form onSubmit={handleSubmit}>
