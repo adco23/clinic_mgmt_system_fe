@@ -1,14 +1,16 @@
 export const ENDPOINTS = {
-  // Endpoints para usuarios
+  // Usuarios
   users: `/users`,
   userById: id => `/users/${id}`,
 
-  // Endpoints para productos
-  products: `/products`,
-  productById: id => `/products/${id}`,
-
-  // Endpoints de autenticación
+  // Autenticación
   login: `/auth/login`,
   register: `/auth/register`,
   roles: '/auth/roles',
+
+  // Especialidades
+  specialties: '/specialties',
+
+  // Doctores
+  doctors: '/doctors'
 };

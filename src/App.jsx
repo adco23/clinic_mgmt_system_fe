@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import Register from './pages/auth/Register';
 import AuthLayout from './layouts/AuthLayout';
 import DoctorProfile from './pages/auth/DoctorProfile';
+import Agenda from './pages/Agenda';
 
 function App() {
   return (
@@ -19,9 +20,7 @@ function App() {
           <Route path='doctor' element={<DoctorProfile />} />
         </Route>
       </Route>
-      {/* // <Route path='doctor'>
-      //   <Route index element={<DoctorProfile/>} />
-      // </Route> */}
+      <Route path='agenda' element={<Agenda />} />
       <Route path='*' element={<NotFound />} />
     </Routes>
   );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api } from '../../config/ApiClient';
+import API from '../../config/ApiClient';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +13,7 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const login = await api.login({ email, password });
+      const login = await API.login({ email, password });
 
       alert(login.message);
       setEmail('');

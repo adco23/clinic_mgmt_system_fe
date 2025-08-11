@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
-import { api } from '../../config/ApiClient';
+import { useNavigate } from "react-router";
+import API from '../../config/ApiClient';
 
 const Register = () => {
+  let navigate = useNavigate();
   const [roles, setRoles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [apiError, setApiError] = useState(null);
-
   const [input, setInput] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     role: '',
   });
-  const [formError, setFormError] = useState(false);
+  // const [formError, setFormError] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -20,7 +21,7 @@ const Register = () => {
 
   const fetchData = async () => {
     try {
-      const result = await api.getRoles();
+      const result = await API.getRoles();
 
       setRoles(result.data);
       setLoading(false);
@@ -37,25 +38,21 @@ const Register = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
-
-    // const url = 'http://localhost:3000/api/auth/register';
-    // const config = {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(input),
-    // };
-
     try {
-      // const response = await fetch(url, config);
-      // const result = await response.json();
+      const result = await API.register(input);
 
-      const result = await api.register(input);
+      if (input.role === 'doctor' && result.status === "Success") { 
+        localStorage.setItem('userId', result.data.userId);
+        navigate('/auth/register/doctor');
+      }
+
       setInput({
         email: '',
         password: '',
         confirmPassword: '',
         role: '',
       });
+
       alert(result.message);
     } catch (error) {
       console.error(error.message);

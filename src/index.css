@@ -49,3 +49,25 @@
 @utility select {
   @apply focus:outline-0 focus-within:outline-0 focus:border-2;
 }
+
+option {
+  display: flex;
+  justify-content: flex-start;
+  gap: 20px;
+
+  border: 2px solid #ddd;
+  background: #eee;
+  padding: 10px;
+  transition: 0.4s;
+}
+
+
+.time-value {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  scrollbar-width: none;
+
+  -ms-overflow-style: none;
+}

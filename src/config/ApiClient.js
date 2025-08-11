@@ -10,8 +10,6 @@ class ApiClient {
     const defaultOptions = {
       headers: {
         'Content-Type': 'application/json',
-        // Aquí puedes agregar un token de autenticación si lo necesitas
-        // 'Authorization': `Bearer ${this.token}`,
       },
     };
 
@@ -19,7 +17,9 @@ class ApiClient {
 
     try {
       const response = await fetch(url, finalOptions);
-      return await response.json();
+      const result = await response.json();
+      console.log("result", result)
+      return result;
     } catch (error) {
       console.error(error);
       throw error;
@@ -48,6 +48,16 @@ class ApiClient {
   getRoles() {
     return this.get(ENDPOINTS.roles);
   }
+
+  getSpecialties() {
+    return this.get(ENDPOINTS.specialties);
+  }
+
+  createDoctorProfile(doctorProfile) {
+    return this.post(ENDPOINTS.doctors, doctorProfile);
+  }
 }
 
-export const api = new ApiClient('http://localhost:3000/api');
+const api = new ApiClient('http://localhost:3000/api');
+
+export default api;

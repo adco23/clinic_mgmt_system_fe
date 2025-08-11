@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
+import API from '../../config/ApiClient';
 import Chip from '../../ui/Chip';
 
 const DoctorProfile = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [phone, setPhone] = useState(false);
   const [email, setEmail] = useState(false);
+  const [specialties, setSpecialties] = useState([]);
+  const [apiError, setApiError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -12,6 +19,58 @@ const DoctorProfile = () => {
     specialty: '',
   });
 
+  useEffect(() => {
+    getIdFromStorage();
+    fetchData();
+  }, []);
+
+  const getIdFromStorage = () => {
+    let item = localStorage.getItem('userId');
+
+    Number(item)
+      ? setUser(Number(item))
+      : alert('Previamente debes dar de alta un usuario.');
+  };
+
+  const fetchData = async () => {
+    try {
+      const result = await API.getSpecialties();
+
+      setSpecialties(result.data);
+      setLoading(false);
+    } catch (error) {
+      setApiError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <div>Loading data...</div>;
+  if (apiError) return <div>Error: {apiError.message}</div>;
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    console.log("send:", {userId: user, ...form})
+    setLoading(true);
+    try {
+      const result = await API.createDoctorProfile({userId: user, ...form});
+      alert(result.message);
+    } catch (error) {
+      console.error(error.message);
+    } finally {
+      setForm({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        specialty: '',
+      });
+      localStorage.removeItem('userId');
+      setLoading(false);
+    }
+  };
+
   return (
     <div className='card w-full max-w-md center'>
       <h2 className='text-4xl font-bold text-center'>Arma tu perfil</h2>
@@ -19,7 +78,7 @@ const DoctorProfile = () => {
         Ingresa la información para mostrar a tus pacientes.
       </p>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <div className='fieldset'>
           <legend className='fieldset-legend'>Nombres</legend>
           <input
@@ -54,19 +113,23 @@ const DoctorProfile = () => {
           </div>
           <select
             name='specialty'
-            value={form.role}
+            value={form.specialty}
             onChange={({ target }) =>
               setForm({ ...form, [target.name]: target.value })
             }
             className='select w-full capitalize'
           >
             <option disabled></option>
-            {/* {roles.length > 0 &&
-              roles.map(role => (
-                <option key={role.id} value={role.name} className='capitalize'>
-                  {role.name}
+            {specialties.length > 0 &&
+              specialties.map(specialty => (
+                <option
+                  key={specialty.id}
+                  value={specialty.name}
+                  className='capitalize'
+                >
+                  {specialty.name}
                 </option>
-              ))} */}
+              ))}
           </select>
         </div>
 
